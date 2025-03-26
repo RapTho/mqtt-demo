@@ -38,13 +38,58 @@ Install podman: [https://podman.io/docs/installation](https://podman.io/docs/ins
 
 #### Adjust config
 
-Adjust the [acl](./mosquitto/acl.txt) and [passwords](./mosquitto/passwords.txt) file to add/modify/remove access and topics
+Adjust the [acl](./mosquitto/acl.txt) and [passwords](./mosquitto/generatePasswordFile.py) to add/modify/remove access and topics
 
 ```
 mosquitto
 ├── Containerfile
 ├── acl.txt
 ├── entrypoint.sh
+├── generatePasswordFile.py
 ├── mosquitto.conf
-└── passwords.txt
+```
+
+Execute the password.txt generation script
+
+```
+python generatePasswordFile.py
+```
+
+The final folder structure should be like this
+
+```
+mosquitto
+├── Containerfile
+├── acl.txt
+├── entrypoint.sh
+├── generatePasswordFile.py
+├── mosquitto.conf
+├── passwords.txt
+```
+
+#### Run locally
+
+Build the container image
+
+```
+podman build -t mosquitto-custom:1.0 .
+```
+
+Start the container locally and test its connection
+
+```
+podman run -d -e MOSQUITTO_CONF="$(cat mosquitto.conf)" \
+              -e ACL="$(cat acl.txt)" \
+              -e PASSWORDS="$(cat passwords.txt)" \
+              -p 1883:1883 -p 9001:9001 --name mosquitto mosquitto-custom:1.0
+```
+
+Run the publisher and subscriber apps in two different terminal sessions to test the connection
+
+```
+python subscriber/main.py
+```
+
+```
+python publisher/main.py
 ```
