@@ -1,0 +1,16 @@
+FROM eclipse-mosquitto:latest
+
+WORKDIR /home/mosquitto/config
+
+COPY entrypoint.sh /home/mosquitto/entrypoint.sh
+
+RUN chmod +x /home/mosquitto/entrypoint.sh && chown mosquitto:mosquitto /home/mosquitto/entrypoint.sh
+
+RUN chown -R mosquitto:mosquitto /home/mosquitto/config
+
+USER mosquitto
+
+EXPOSE 1883
+EXPOSE 9001
+
+CMD ["sh", "/home/mosquitto/entrypoint.sh"]

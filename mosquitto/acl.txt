@@ -1,0 +1,59 @@
+user student1
+topic write student1/topic
+topic read student1/topic
+
+user student2
+topic write student2/topic
+topic read student2/topic
+
+user student3
+topic write student3/topic
+topic read student3/topic
+
+user student4
+topic write student4/topic
+topic read student4/topic
+
+user student5
+topic write student5/topic
+topic read student5/topic
+
+user student6
+topic write student6/topic
+topic read student6/topic
+
+user student7
+topic write student7/topic
+topic read student7/topic
+
+user student8
+topic write student8/topic
+topic read student8/topic
+
+user student9
+topic write student9/topic
+topic read student9/topic
+
+user student10
+topic write student10/topic
+topic read student10/topic
+
+user student11
+topic write student11/topic
+topic read student11/topic
+
+user student12
+topic write student12/topic
+topic read student12/topic
+
+user student13
+topic write student13/topic
+topic read student13/topic
+
+user student14
+topic write student14/topic
+topic read student14/topic
+
+user student15
+topic write student15/topic
+topic read student15/topic
