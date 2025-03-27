@@ -37,23 +37,3 @@ topic read student9/topic
 user student10
 topic write student10/topic
 topic read student10/topic
-
-user student11
-topic write student11/topic
-topic read student11/topic
-
-user student12
-topic write student12/topic
-topic read student12/topic
-
-user student13
-topic write student13/topic
-topic read student13/topic
-
-user student14
-topic write student14/topic
-topic read student14/topic
-
-user student15
-topic write student15/topic
-topic read student15/topic

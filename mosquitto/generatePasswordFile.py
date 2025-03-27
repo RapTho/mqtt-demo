@@ -22,11 +22,6 @@ users_and_passwords = {
     "student8": "password8",
     "student9": "password9",
     "student10": "password10",
-    "student11": "password11",
-    "student12": "password12",
-    "student13": "password13",
-    "student14": "password14",
-    "student15": "password15",
 }
 
 with open(PASSWORD_FILE, "w") as f:
