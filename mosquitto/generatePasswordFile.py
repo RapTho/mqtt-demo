@@ -1,7 +1,6 @@
 import subprocess
 import os
 
-# Check if mosquitto_passwd is installed
 try:
     subprocess.run(["mosquitto_passwd", "--help"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 except FileNotFoundError:
@@ -33,10 +32,8 @@ users_and_passwords = {
 with open(PASSWORD_FILE, "w") as f:
     pass  # Just create an empty file or overwrite if it already exists
 
-# Loop through the usernames and passwords to generate hashed entries
 for user, password in users_and_passwords.items():
     try:
-        # Execute the mosquitto_passwd binary with the -b flag
         subprocess.run(
             ["mosquitto_passwd", "-b", PASSWORD_FILE, user, password],
             check=True,
@@ -47,7 +44,6 @@ for user, password in users_and_passwords.items():
         print(f"Error while adding user '{user}': {e.stderr.decode().strip()}")
         exit(1)
 
-# Set file permissions to 700
 os.chmod(PASSWORD_FILE, 0o700)
 
 print(f"Password file created at '{PASSWORD_FILE}' with permissions set to 700.")
