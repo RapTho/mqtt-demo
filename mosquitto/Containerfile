@@ -4,10 +4,7 @@ ARG WORKDIR=/home/mosquitto
 
 WORKDIR $WORKDIR
 
-COPY entrypoint.sh ${WORKDIR}/entrypoint.sh
-
-RUN chmod +x ${WORKDIR}/entrypoint.sh &&\ 
-    mkdir ${WORKDIR}/config ${WORKDIR}/acl ${WORKDIR}/passwords
+RUN mkdir ${WORKDIR}/config ${WORKDIR}/acl ${WORKDIR}/passwords
 
 RUN chown -R mosquitto:mosquitto ${WORKDIR}
 
