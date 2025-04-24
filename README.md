@@ -87,13 +87,13 @@ podman build --jobs 2 --platform linux/amd64,linux/arm64 --manifest ${IMAGE_NAME
 
 #### OPTIONAL: Test locally
 
-Start the container locally and test its connection
+Start the container locally and test its connection. All files will be mounted into all of the 3 folders inside the container. Not pretty but it works
 
 ```
-podman run -d -e MOSQUITTO_CONF="$(cat mosquitto.conf)" \
-              -e ACL="$(cat acl.txt)" \
-              -e PASSWORDS="$(cat passwords.txt)" \
-              -p 1883:1883 -p 9001:9001 --name mosquitto ${IMAGE_NAME}:${IMAGE_TAG}
+podman run -d -v ./:/home/mosquitto/passwords:ro \
+              -v ./:/home/mosquitto/acl:ro \
+              -v ./:/home/mosquitto/config:ro \
+              -p 1883:1883 --name mosquitto ${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
 Run the publisher and subscriber apps in two different terminal sessions to test the connection
