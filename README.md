@@ -84,15 +84,7 @@ Build the container image
 
 ```
 
-podman build -t ${IMAGE_NAME}:${IMAGE_TAG} --layers=false /path/to/Containerfile
-```
-
-#### For ARM users
-
-If you build on a machine with a CPU architecture other than `amd64`, you need to build for `amd64` architecture
-
-```
-podman build -t ${IMAGE_NAME}:${IMAGE_TAG} --layers=false --arch=amd64 /path/to/Containerfile
+podman build --jobs 2 --platform linux/amd64,linux/arm64 --manifest ${IMAGE_NAME}:${IMAGE_TAG} --layers=false /path/to/Containerfile
 ```
 
 #### OPTIONAL: Test locally
@@ -122,8 +114,8 @@ python /path/to/publisher/main.py
 ibmcloud cr region-set eu-central
 ibmcloud cr login --client podman
 ibmcloud cr namespace-add ${CR_NAMESPACE}
-podman tag mosquitto-custom:1.0 de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
-podman push de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
+podman tag ${IMAGE_NAME}:${IMAGE_TAG} de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
+podman manifest push --all de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
 Set image retention policy to 2.
@@ -150,16 +142,23 @@ Create a pull secret for IBM Code Engine to access the IBM Container Registry
 ibmcloud ce registry create --name ibm-container-registry-${USER} --server de.icr.io --username iamapikey --password ${API_KEY}
 ```
 
+<!--
+## Authenticate kubectl to IBM Code Engine
+
+Install `kubectl`: [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/)
+
+Follow these instructions: [https://cloud.ibm.com/docs/codeengine?topic=codeengine-kubernetes](https://cloud.ibm.com/docs/codeengine?topic=codeengine-kubernetes) -->
+
 ## Upload mosquitto configuration, acl and passwords to IBM Code Engine
 
 ```
-ibmcloud ce configmap create --name conf-${USER} --from-file MOSQUITTO_CONF=mosquitto/mosquitto.conf
-ibmcloud ce configmap create --name acl-${USER} --from-file ACL=mosquitto/acl.txt
-ibmcloud ce secret create --name passwords-${USER} --from-file PASSWORDS=mosquitto/passwords.txt
+ibmcloud ce configmap create --name conf-${USER} --from-file mosquitto.conf=mosquitto/mosquitto.conf
+ibmcloud ce configmap create --name acl-${USER} --from-file acl.txt=mosquitto/acl.txt
+ibmcloud ce secret create --name passwords-${USER} --from-file passwords.txt=mosquitto/passwords.txt
 ```
 
 ## Deploy the mosquitto MQTT broker
 
 ```
-ibmcloud ce app create --name mosquitto-${USER} --image de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} --registry-secret ibm-container-registry-${USER} --env-from-secret passwords-${USER} --env-from-configmap conf-${USER} --env-from-configmap acl-${USER} --port 1883 --min-scale 1 --max-scale 1 --cpu 0.25 --memory 0.5G
+ibmcloud ce app create --name mosquitto-${USER} --image de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} --registry-secret ibm-container-registry-${USER} --mount-secret /home/mosquitto/passwords=passwords-${USER} --mount-configmap /home/mosquitto/config=conf-${USER} --mount-configmap /home/mosquitto/acl=acl-${USER} --port 1883 --min-scale 1 --max-scale 1 --cpu 0.25 --memory 0.5G
 ```
