@@ -57,7 +57,6 @@ Adjust the [acl](./mosquitto/acl.txt) and [passwords](./mosquitto/generatePasswo
 mosquitto
 ├── Containerfile
 ├── acl.txt
-├── entrypoint.sh
 ├── generatePasswordFile.py
 ├── mosquitto.conf
 ```
@@ -74,7 +73,6 @@ The final folder structure should be like this
 mosquitto
 ├── Containerfile
 ├── acl.txt
-├── entrypoint.sh
 ├── generatePasswordFile.py
 ├── mosquitto.conf
 ├── passwords.txt
