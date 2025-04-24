@@ -1,16 +1,19 @@
 FROM eclipse-mosquitto:latest
 
-WORKDIR /home/mosquitto/config
+ARG WORKDIR=/home/mosquitto
 
-COPY entrypoint.sh /home/mosquitto/entrypoint.sh
+WORKDIR $WORKDIR
 
-RUN chmod +x /home/mosquitto/entrypoint.sh && chown mosquitto:mosquitto /home/mosquitto/entrypoint.sh
+COPY entrypoint.sh ${WORKDIR}/entrypoint.sh
 
-RUN chown -R mosquitto:mosquitto /home/mosquitto/config
+RUN chmod +x ${WORKDIR}/entrypoint.sh &&\ 
+    mkdir ${WORKDIR}/config ${WORKDIR}/acl ${WORKDIR}/passwords
+
+RUN chown -R mosquitto:mosquitto ${WORKDIR}
 
 USER mosquitto
 
 EXPOSE 1883
 EXPOSE 9001
 
-CMD ["sh", "/home/mosquitto/entrypoint.sh"]
+CMD ["/usr/sbin/mosquitto", "-c", "/home/mosquitto/config/mosquitto.conf"]
