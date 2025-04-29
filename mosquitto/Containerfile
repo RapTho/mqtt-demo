@@ -11,6 +11,6 @@ RUN chown -R mosquitto:mosquitto ${WORKDIR}
 USER mosquitto
 
 EXPOSE 1883
-EXPOSE 9001
+EXPOSE 8083
 
 CMD ["/usr/sbin/mosquitto", "-c", "/home/mosquitto/config/mosquitto.conf"]

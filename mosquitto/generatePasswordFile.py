@@ -7,8 +7,6 @@ except FileNotFoundError:
     print("Error: 'mosquitto_passwd' is not installed or not found in PATH.")
     exit(1)
 
-
-
 PASSWORD_FILE = "passwords.txt"
 
 users_and_passwords = {
@@ -41,4 +39,4 @@ for user, password in users_and_passwords.items():
 
 os.chmod(PASSWORD_FILE, 0o700)
 
-print(f"Password file created at '{PASSWORD_FILE}' with permissions set to 700.")
+print(f"Password file '{PASSWORD_FILE}' created with permissions set to 700.")

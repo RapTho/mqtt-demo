@@ -8,11 +8,15 @@ from config import Config
 
 class MqttPublisher:
     def __init__(self):
-        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+        if Config.PORT == 8083:
+            self.client = mqtt.Client(transport="websockets")
+        else:
+            self.client = mqtt.Client()
         self.client.username_pw_set(Config.USERNAME, Config.PASSWORD)
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
         self.client.on_log = self.on_log
+
 
     def on_connect(self, client, userdata, flags, rc, properties=None):
         if rc == 0:
@@ -49,10 +53,13 @@ class MqttPublisher:
     def on_log(self, client, userdata, level, buf):
         print(f"[{datetime.now()}] MQTT Log: {buf}")
 
-    def on_disconnect(self, client, userdata, rc):
-        if rc != 0:
-            print(f"[{datetime.now()}] Unexpected disconnection. Result code: {rc}")
+    def on_disconnect(self, client, userdata, reason, properties=None, *args):
+        if reason != 0:
+            print(f"[{datetime.now()}] Unexpected disconnection. Result code: {reason}")
             sys.exit(1)
+        else:
+            print("Disconnected")
+
 
     def handle_sigterm(self, signal_number, frame):
         print(f"[{datetime.now()}] Received termination signal. Disconnecting...")
@@ -66,6 +73,10 @@ class MqttPublisher:
             print(f"[{datetime.now()}] Starting publisher...")
             self.client.connect(Config.BROKER_ADDRESS, Config.PORT)
             self.client.loop_forever()
+        except ConnectionRefusedError:
+            print("Connection refused")
+        except TimeoutError:
+            print("Connection timed out")
         except Exception as e:
             print(f"[{datetime.now()}] Failed to start publisher: {e}")
             sys.exit(1)

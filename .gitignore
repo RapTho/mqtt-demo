@@ -178,3 +178,4 @@ cython_debug/
 .DS_Store
 passwords.txt
 restartContainer.sh
+rebuild.sh
