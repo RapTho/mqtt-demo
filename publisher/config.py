@@ -1,12 +1,14 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Config:
-    BROKER_ADDRESS = "127.0.0.1"
-    # BROKER_ADDRESS = "mosquitto-raphael.1thahhsghj4d.eu-de.codeengine.appdomain.cloud"
-    # BROKER_ADDRESS = "10.243.0.83"
-    USERNAME = "student1"
-    PASSWORD = "password1"
-    TOPIC = "student1/topic"
-    PORT = 1883
-    # PORT = 8083
+    BROKER_ADDRESS = os.getenv("BROKER_ADDRESS", "localhost")
+    USERNAME = os.getenv("USERNAME", "student1")
+    PASSWORD = os.getenv("PASSWORD", "password1")
+    TOPIC = os.getenv("TOPIC", "student1/topic")
+    PORT = int(os.getenv("PORT", 1883))
     SCHEMA = {
         "type": "object",
         "properties": {
