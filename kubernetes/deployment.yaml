@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto-raphael
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: mosquitto-raphael
+  template:
+    metadata:
+      labels:
+        app: mosquitto-raphael
+    spec:
+      securityContext:
+          runAsNonRoot: true
+          runAsUser: 1883
+          runAsGroup: 1883
+          fsGroup: 1883
+      containers:
+      - name: user-container
+        image: de.icr.io/hslu-iot-digital-engineering/mosquitto-custom:1.0
+        serviceAccountName: mqtt
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8083
+          name: user-port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 250m
+            ephemeral-storage: 400M
+            memory: 500M
+          requests:
+            cpu: 250m
+            ephemeral-storage: 400M
+            memory: 500M
+        securityContext:
+          allowPrivilegeEscalation: false
+        volumeMounts:
+          - name: conf-raphael
+            mountPath: /home/mosquitto/config
+          - name: acl-raphael
+            mountPath: /home/mosquitto/acl
+          - name: passwords-raphael
+            mountPath: /home/mosquitto/passwords
+      imagePullSecrets:
+      - name: ibm-container-registry-raphael
+      restartPolicy: Always
+      serviceAccount: mqtt
+      volumes:
+      - name: conf-raphael
+        configMap:
+          name: conf-raphael
+      - name: acl-raphael
+        configMap:
+          name: acl-raphael
+      - name: passwords-raphael
+        secret:
+          secretName: passwords-raphael

@@ -51,7 +51,7 @@ Install podman: [https://podman.io/docs/installation](https://podman.io/docs/ins
 
 ## Build the mosquitto container image
 
-Adjust the [acl](./mosquitto/acl.txt) and [passwords](./mosquitto/generatePasswordFile.py) to add/modify/remove access and topics
+Adjust the [acl](./acl.txt) and [passwords](./generatePasswordFile.py) to add/modify/remove access and topics
 
 ```
 mosquitto
@@ -81,8 +81,7 @@ mosquitto
 Build the container image
 
 ```
-
-podman build --jobs 2 --platform linux/amd64,linux/arm64 --manifest ${IMAGE_NAME}:${IMAGE_TAG} --layers=false /path/to/Containerfile
+podman build --jobs 2 --platform linux/amd64,linux/arm64 --manifest ${IMAGE_NAME}:${IMAGE_TAG} --layers=false .
 ```
 
 #### OPTIONAL: Test locally
@@ -150,9 +149,9 @@ Follow these instructions: [https://cloud.ibm.com/docs/codeengine?topic=codeengi
 ## Upload mosquitto configuration, acl and passwords to IBM Code Engine
 
 ```
-ibmcloud ce configmap create --name conf-${USER} --from-file mosquitto.conf=mosquitto/mosquitto.conf
-ibmcloud ce configmap create --name acl-${USER} --from-file acl.txt=mosquitto/acl.txt
-ibmcloud ce secret create --name passwords-${USER} --from-file passwords.txt=mosquitto/passwords.txt
+ibmcloud ce configmap create --name conf-${USER} --from-file mosquitto.conf=mosquitto.conf
+ibmcloud ce configmap create --name acl-${USER} --from-file acl.txt=acl.txt
+ibmcloud ce secret create --name passwords-${USER} --from-file passwords.txt=passwords.txt
 ```
 
 ## Deploy the mosquitto MQTT broker

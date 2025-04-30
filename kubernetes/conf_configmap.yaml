@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: conf-raphael
+data:
+  mosquitto.conf: |-
+    # general
+    allow_anonymous false
+    connection_messages true
+    log_dest stdout
+    log_timestamp true
+    log_timestamp_format %Y-%m-%dT%H:%M:%S
+    log_type all
+    persistence false
+    user mosquitto
+
+    # config files
+    password_file /home/mosquitto/passwords/passwords.txt
+    acl_file /home/mosquitto/acl/acl.txt
+
+    # network
+    listener 1883 0.0.0.0
+    protocol mqtt
+    listener 8083 0.0.0.0
+    protocol websockets
