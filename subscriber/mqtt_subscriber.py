@@ -12,9 +12,11 @@ class MqttSubscriber:
         self.running = False
         self.connected = False
         self.error = None
-        if Config.PORT == 8083 or Config.PORT == 443:
+        if Config.PORT == 8083:
             self.client = mqtt.Client(transport="websockets")
-            self.client.tls_set(None, cert_reqs=ssl.CERT_NONE) # Ignore TLS
+        elif Config.PORT == 443:
+            self.client = mqtt.Client(transport="websockets")
+            self.client.tls_set(None, cert_reqs=ssl.CERT_NONE) # Ignore TLS verification
         else:
             self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
         self.client.username_pw_set(Config.USERNAME, Config.PASSWORD)
@@ -22,6 +24,7 @@ class MqttSubscriber:
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
         self.client.on_log = self.on_log
+
 
     def on_connect(self, client, userdata, flags, rc, properties=None):
         if rc == 0:
