@@ -33,14 +33,8 @@ USERNAME=student1
 PASSWORD=password1
 PORT=1883
 TOPIC=student1/topic
-SCHEMA = {
-    "type": "object",
-    "properties": {
-        "id": {"type": "integer"},
-        "message": {"type": "string"},
-    },
-    "required": ["id", "message"]
-}
+SCHEMA={"type": "object", "properties": {"id": {"type": "integer"}, "message": {"type": "string"}}, "required": ["id", "message"]}
+
 ```
 
 ## Send a message
