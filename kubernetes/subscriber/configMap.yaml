@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: subscriber-conf-raphael
 data: 
-  BROKER_ADDRESS: mosquitto-raphael.mqtt.svc.cluster.local
+  BROKER_ADDRESS: mosquitto-raphael.1thahhsghj4d.eu-de.codeengine.appdomain.cloud
   TOPIC: "student1/topic"
-  PORT: "8083"
+  PORT: "443"
   CLOUDANT_DB_NAME: "raphael-test"
   CLOUDANT_URL: "https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud"
   SCHEMA: '{"type": "object", "properties": {"id": {"type": "integer"}, "message": {"type": "string"}}, "required": ["id", "message"]}'
