@@ -16,9 +16,9 @@ class Config:
         },
         "required": ["id", "message"]
     }
-    BROKER_ADDRESS = os.getenv("BROKER_ADDRESS", "localhost")
-    USERNAME = os.getenv("USERNAME", "student1")
-    PASSWORD = os.getenv("PASSWORD", "password1")
-    TOPIC = os.getenv("TOPIC", "student1/topic")
+    BROKER_ADDRESS = os.getenv("BROKER_ADDRESS", "localhost").strip('"\'')
+    USERNAME = os.getenv("USERNAME", "student1").strip('"\'')
+    PASSWORD = os.getenv("PASSWORD", "password1").strip('"\'')
+    TOPIC = os.getenv("TOPIC", "student1/topic").strip('"\'')
     PORT = int(os.getenv("PORT", 1883))
-    SCHEMA = json.loads(os.getenv("SCHEMA", json.dumps(DEFAULT_SCHEMA)))
+    SCHEMA = json.loads(os.getenv("SCHEMA", json.dumps(DEFAULT_SCHEMA)).strip('"\''))
