@@ -1,6 +1,5 @@
 import sys
 import time
-from datetime import datetime
 from mqtt_publisher import MqttPublisher
 
 def main():
