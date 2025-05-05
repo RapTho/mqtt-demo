@@ -1,0 +1,4 @@
+.env
+.venv/
+Containerfile
+__pycache__/
