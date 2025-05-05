@@ -4,6 +4,10 @@ Demo of using the Mosquitto MQTT broker and a subscriber application to forward 
 
 ## Pre-requisites
 
+#### IBMid
+
+To interact with the IBM Cloud, you need an IBMid. Register here: [https://www.ibm.com/account/reg/us-en/signup](https://www.ibm.com/account/reg/us-en/signup?formid=urx-19776)
+
 #### ibmcloud CLI
 
 Install the Command Line Interface tool to interact with IBM Cloud:<br />
@@ -138,13 +142,6 @@ Create a pull secret for IBM Code Engine to access the IBM Container Registry
 ```
 ibmcloud ce registry create --name ibm-container-registry-${USER} --server de.icr.io --username iamapikey --password ${API_KEY}
 ```
-
-<!--
-## Authenticate kubectl to IBM Code Engine
-
-Install `kubectl`: [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/)
-
-Follow these instructions: [https://cloud.ibm.com/docs/codeengine?topic=codeengine-kubernetes](https://cloud.ibm.com/docs/codeengine?topic=codeengine-kubernetes) -->
 
 ## Upload mosquitto configuration, acl and passwords to IBM Code Engine
 
