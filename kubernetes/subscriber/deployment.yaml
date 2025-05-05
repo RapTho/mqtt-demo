@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriber-raphael
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: subscriber-raphael
+  template:
+    metadata:
+      labels:
+        app: subscriber-raphael
+    spec:
+      securityContext:
+          runAsNonRoot: true
+          runAsUser: 1001
+          runAsGroup: 1001
+          fsGroup: 1001
+      containers:
+      - name: user-container
+        image: quay.io/rthollibm/mqtt-cloudant-forwarder:1.0
+        envFrom:
+          - configMapRef:
+              name: subscriber-conf-raphael
+          - secretRef:
+              name: subscriber-secret-raphael
+        serviceAccountName: subscriber
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 250m
+            ephemeral-storage: 400M
+            memory: 500M
+          requests:
+            cpu: 250m
+            ephemeral-storage: 400M
+            memory: 500M
+        securityContext:
+          allowPrivilegeEscalation: false
+      restartPolicy: Always
+      serviceAccount: subscriber
