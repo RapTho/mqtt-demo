@@ -1,6 +1,6 @@
-# mqtt-demo
+# mosquitto deployment
 
-Demo of using the Mosquitto MQTT broker and a subscriber application to forward messages to IBM Cloudant
+A guide of how to deploy mosquitto on IBM Code Engine
 
 ## Pre-requisites
 
