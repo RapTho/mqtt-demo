@@ -1,0 +1,29 @@
+@startuml
+skinparam backgroundColor transparent
+skinparam FontColor white
+skinparam NoteFontColor white
+skinparam ArrowColor white
+skinparam ArrowFontColor white
+skinparam ActorBorderColor white
+skinparam ActorFontColor white
+skinparam ActorBackgroundColor transparent
+skinparam ParticipantBorderColor white
+skinparam ParticipantFontColor white
+skinparam ParticipantBackgroundColor transparent
+skinparam DatabaseBorderColor white
+skinparam DatabaseFontColor white
+skinparam DatabaseBackgroundColor transparent
+skinparam SequenceLifeLineBorderColor white
+skinparam SequenceLifeLineBackgroundColor transparent
+
+actor Publisher
+participant "Mosquitto Broker" as Broker
+actor Subscriber
+database "IBM Cloudant DB" as Cloudant
+
+Publisher -> Broker: Publish msg (MQTT/1883 and websockets/8083)
+Broker -> Subscriber: Push msg(Subscribed to Topic)
+Subscriber -> Subscriber: Process and handle msg
+Subscriber -> Cloudant: Store msg in DB
+Cloudant -> Subscriber: Acknowledge storage
+@enduml
