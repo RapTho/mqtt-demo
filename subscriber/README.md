@@ -42,8 +42,6 @@ CLOUDANT_PASSWORD="myCloudantPassword"
 CLOUDANT_DB_NAME="raphael-test"
 CLOUDANT_URL="https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud"
 SCHEMA={"type": "object", "properties": {"id": {"type": "integer"}, "message": {"type": "string"}}, "required": ["id", "message"]}
-
-
 ```
 
 ## Start the subscriber app
@@ -56,6 +54,57 @@ python main.py
 
 ## Build and deploy app
 
-To build the container image and deploy it on IBM Code Engine, you can refer to the instructions in the [mosquitto folder](../mosquitto/).
+To build the container image and deploy it on IBM Code Engine. The process is extensively documented in the [mosquitto folder](../mosquitto/).
 
 The steps will be similar but another [Containerfile](./Containerfile) is provided
+
+Set new environment variables for the deployment process
+
+```bash
+export RESOURCE_GROUP=iot-digital-engineering
+export CR_NAMESPACE=hslu-iot-digital-engineering
+export IMAGE_NAME=subscriber-raphael
+export IMAGE_TAG=1.0
+```
+
+Use secret and configmap from the kubernetes/subscriber folder to create new configuration for the subscriber. <br />
+
+After building and pushing your container image, you can deploy it. This time we will deploy the subscriber as a `job` of type `daemon`, as the subscriber doesn't expose any endpoint.
+
+Create the daemon job
+
+```bash
+ibmcloud ce job create --mode daemon --name subscriber-${USER} --image de.icr.io/${CR_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} --registry-secret ibm-container-registry-${USER} --env-from-configmap subscriber-conf-${USER} --env-from-secret subscriber-secret-${USER} --cpu 0.25 --memory 0.5G
+```
+
+Run an instance of the daemon job
+
+```bash
+ibmcloud ce jobrun submit --name subscriber-run-${USER} --job subscriber-${USER}
+```
+
+## Troubleshooting
+
+### Connect to IBM Code Engine's Kubernetes-API
+
+To use `kubectl` with IBM Code Engine, you can set the context as documented [here](https://cloud.ibm.com/docs/codeengine?topic=codeengine-kubernetes)
+
+```bash
+ibmcloud ce project select -n iot-digital-engineering --kubecfg
+```
+
+Now you can do everything you're authorized to :)
+
+### Get Pods
+
+```bash
+kubectl get pods
+```
+
+### Check logs of a specific pod
+
+Replace `myPodName` with the name of your pod. You can also use the `-f` option to subscribe to incoming logs
+
+```bash
+kubectl logs pod/myPodName
+```
