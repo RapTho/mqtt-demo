@@ -4,8 +4,6 @@ Demo of using the Mosquitto MQTT broker and a subscriber application to forward 
 
 ## Sequence diagram
 
-<!-- ![sequence-diagram](./docs/sequence-diagram.svg) -->
-
 <picture>
     <source srcset="./docs/sequence-diagram_light.svg" media="(prefers-color-scheme: dark)">
     <source srcset="./docs/sequence-diagram_dark.svg" media="(prefers-color-scheme: light)">
