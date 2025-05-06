@@ -96,7 +96,7 @@ Start the container locally and test its connection. All files will be mounted i
 podman run -d -v ./:/home/mosquitto/passwords:ro \
               -v ./:/home/mosquitto/acl:ro \
               -v ./:/home/mosquitto/config:ro \
-              -p 1883:1883 -p 8083 --name mosquitto ${IMAGE_NAME}:${IMAGE_TAG}
+              -p 1883:1883 -p 8083:8083 --name mosquitto ${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
 Run the publisher and subscriber apps in two different terminal sessions to test the connection
