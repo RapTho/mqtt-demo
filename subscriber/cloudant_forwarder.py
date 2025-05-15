@@ -5,7 +5,7 @@ from config import Config
 class CloudantForwarder:
     def forward_message(self, message):
         try:
-            url = f"{Config.CLOUDANT_URL}/{Config.CLOUDANT_DB_NAME}"
+            url = f"{Config.CLOUDANT_HOST}/{Config.CLOUDANT_DB_NAME}"
             auth = (Config.CLOUDANT_USERNAME, Config.CLOUDANT_PASSWORD)
             headers = {"Content-Type": "application/json"}
             data = {"message": message}

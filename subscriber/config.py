@@ -24,5 +24,5 @@ class Config:
     CLOUDANT_USERNAME = os.getenv("CLOUDANT_USERNAME", "apikey-v2-XXX").strip('"\'')
     CLOUDANT_PASSWORD = os.getenv("CLOUDANT_PASSWORD", "myCloudantPassword").strip('"\'')
     CLOUDANT_DB_NAME = os.getenv("CLOUDANT_DB_NAME", "raphael-test").strip('"\'')
-    CLOUDANT_URL = os.getenv("CLOUDANT_URL", "https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud").strip('"\'')
+    CLOUDANT_HOST = os.getenv("CLOUDANT_HOST", "https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud").strip('"\'')
     SCHEMA = json.loads(os.getenv("SCHEMA", json.dumps(DEFAULT_SCHEMA)).strip('"\''))

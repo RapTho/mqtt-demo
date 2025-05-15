@@ -26,7 +26,7 @@ To configure the app, create a .env file in the root of the project with the fol
 - CLOUDANT_USERNAME: the username to use when connecting to the Cloudant database
 - CLOUDANT_PASSWORD: the password to use when connecting to the Cloudant database
 - CLOUDANT_DB_NAME: the name of the Cloudant database
-- CLOUDANT_URL: the host of the Cloudant database
+- CLOUDANT_HOST: the host of the Cloudant database
 - SCHEMA: the message's schema
 
 Example .env file:
@@ -40,7 +40,7 @@ PORT=8083
 CLOUDANT_USERNAME="apikey-v2-xxxx"
 CLOUDANT_PASSWORD="myCloudantPassword"
 CLOUDANT_DB_NAME="raphael-test"
-CLOUDANT_URL="https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud"
+CLOUDANT_HOST="https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud"
 SCHEMA={"type": "object", "properties": {"id": {"type": "integer"}, "message": {"type": "string"}}, "required": ["id", "message"]}
 ```
 
