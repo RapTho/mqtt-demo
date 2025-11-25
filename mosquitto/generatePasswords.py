@@ -1,13 +1,16 @@
 import subprocess
 import os
 
+PASSWORD_FILE = "passwords.txt"
+
 try:
-    subprocess.run(["mosquitto_passwd", "--help"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+    subprocess.run(["mosquitto_passwd", "-b", "-c", PASSWORD_FILE, "myUser", "myPassword"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 except FileNotFoundError:
     print("Error: 'mosquitto_passwd' is not installed or not found in PATH.")
     exit(1)
-
-PASSWORD_FILE = "passwords.txt"
+finally:
+    if os.path.exists(PASSWORD_FILE):
+        os.remove(PASSWORD_FILE)
 
 users_and_passwords = {
     "student1": "password1",
@@ -39,4 +42,4 @@ for user, password in users_and_passwords.items():
 
 os.chmod(PASSWORD_FILE, 0o700)
 
-print(f"Password file '{PASSWORD_FILE}' created with permissions set to 700.")
+print(f"Password file created at '{PASSWORD_FILE}' with permissions set to 700.")
