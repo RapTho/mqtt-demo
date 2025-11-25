@@ -55,20 +55,20 @@ Install podman: [https://podman.io/docs/installation](https://podman.io/docs/ins
 
 ## Build the mosquitto container image
 
-Adjust the [acl](./acl.txt) and [passwords](./generatePasswordFile.py) to add/modify/remove access and topics
+Adjust the [acl](./acl.txt) and [passwords](./generatePasswords.py) to add/modify/remove access and topics
 
 ```
 mosquitto
 ├── Containerfile
 ├── acl.txt
-├── generatePasswordFile.py
+├── generatePasswords.py
 ├── mosquitto.conf
 ```
 
 Execute the password.txt generation script
 
 ```
-python generatePasswordFile.py
+python generatePasswords.py
 ```
 
 The final folder structure should be like this
@@ -77,7 +77,7 @@ The final folder structure should be like this
 mosquitto
 ├── Containerfile
 ├── acl.txt
-├── generatePasswordFile.py
+├── generatePasswords.py
 ├── mosquitto.conf
 ├── passwords.txt
 ```
