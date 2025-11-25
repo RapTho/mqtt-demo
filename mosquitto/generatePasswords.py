@@ -40,6 +40,6 @@ for user, password in users_and_passwords.items():
         print(f"Error while adding user '{user}': {e.stderr.decode().strip()}")
         exit(1)
 
-os.chmod(PASSWORD_FILE, 0o700)
+os.chmod(PASSWORD_FILE, 0o600)
 
-print(f"Password file created at '{PASSWORD_FILE}' with permissions set to 700.")
+print(f"Password file created at '{PASSWORD_FILE}' with permissions set to 600.")
