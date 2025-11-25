@@ -23,8 +23,7 @@ To configure the app, create a .env file in the root of the project with the fol
 - PASSWORD: the password to use when connecting to the broker
 - PORT: the port to use when connecting to the broker
 - TOPIC: the topic to publish messages to
-- CLOUDANT_USERNAME: the username to use when connecting to the Cloudant database
-- CLOUDANT_PASSWORD: the password to use when connecting to the Cloudant database
+- CLOUDANT_API_KEY: the IBM Cloud API key for Cloudant authentication (will be exchanged for a Bearer token)
 - CLOUDANT_DB_NAME: the name of the Cloudant database
 - CLOUDANT_HOST: the host of the Cloudant database
 - SCHEMA: the message's schema
@@ -37,12 +36,19 @@ USERNAME="student1"
 PASSWORD="password1"
 TOPIC="student1/topic"
 PORT=8083
-CLOUDANT_USERNAME="apikey-v2-xxxx"
-CLOUDANT_PASSWORD="myCloudantPassword"
+CLOUDANT_API_KEY="your-ibm-cloud-api-key-here"
 CLOUDANT_DB_NAME="raphael-test"
 CLOUDANT_HOST="https://e11b279a-7332-4e48-846e-886a31a1b101-bluemix.cloudantnosqldb.appdomain.cloud"
 SCHEMA={"type": "object", "properties": {"id": {"type": "integer"}, "message": {"type": "string"}}, "required": ["id", "message"]}
 ```
+
+## Authentication
+
+The application uses IBM Cloud IAM (Identity and Access Management) for Cloudant authentication:
+
+1. On startup, the application exchanges the `CLOUDANT_API_KEY` for a Bearer token using the IBM Cloud IAM token service
+2. The Bearer token is then used to authenticate all requests to the Cloudant database
+3. If the token exchange fails, the application will exit gracefully with an error message
 
 ## Start the subscriber app
 
