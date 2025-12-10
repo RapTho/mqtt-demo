@@ -4,6 +4,7 @@ import sys
 import ssl
 import signal
 import json
+import time
 from jsonschema import validate, ValidationError
 from config import Config
 
@@ -89,7 +90,11 @@ class MqttSubscriber:
                 self.client.loop_start()
                 self.running = True
                 print(f"[{datetime.now()}] Started subscriber")
-                signal.pause() # Wait for signals
+                
+                # Instead of using signal.pause(), which doesn't work on Windows.
+                while self.running:
+                    time.sleep(0.5)
+                    
             except ConnectionRefusedError:
                 raise Exception(f"[{datetime.now()}] Connection refused")
             except TimeoutError:
